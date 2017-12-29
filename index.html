@@ -1,7 +1,7 @@
 <html>
-
+2
 <head>
-	<meta name="description" content="Ramzi A Final Demo 2 Working Copy 12/1/17 1:32am">
+	<meta name="description" content="Ramzi A Final Project GGS 692 12/3/17 1:10am">
 
    <!-- Leaflet -->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
@@ -12,15 +12,14 @@
    crossorigin=""></script>
    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 
-	<!-- Markerclusters -->
-    <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
-    <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
+  <!-- Markerclusters -->
+  <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/leaflet.markercluster.js'></script>
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.css' rel='stylesheet' />
+  <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v1.0.0/MarkerCluster.Default.css' rel='stylesheet' />
 
-    
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/leaflet.marker.hightlight@0.0.3/index.css'>
-    <script src='https://cdn.jsdelivr.net/npm/leaflet.marker.hightlight@0.0.3/index.min.js'></script>
-
+  <!-- Highlight Icons --> 
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/leaflet.marker.hightlight@0.0.3/index.css'>
+  <script src='https://cdn.jsdelivr.net/npm/leaflet.marker.hightlight@0.0.3/index.min.js'></script>
 
   <style>
     .info {
@@ -38,11 +37,10 @@
             text-align: center
      
 		}
+
   </style>
   </head>
-  
 
-  
 	<body>
 		<div id="map" style="width: 100%; height: 100%"></div>
 		<script>
@@ -52,90 +50,90 @@
 				zoom: 7
 			});
 
-			//add baselayer to map
+			//Map Box Layer
 			var Light =  L.tileLayer('https://api.mapbox.com/styles/v1/baitnjan/cjaa2gmtz22c02ro7b49xnksr/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYmFpdG5qYW4iLCJhIjoiY2lobG81MWtwMG9panY1a2x3aTVteG51MiJ9.laEPgZHFiW9ZAL1-rIKtkA', {
                attribution: '&copy; <a href="https://osm.org/copyright">Mapbox</a> contributors',
 				minZoom: 0,
 				maxZoom: 20,
 				ext: 'png'
 			}).addTo(map);
-         
-            //var baseMaps = {
-			//"Light MapBox" : Light,
-           // "Mapbox Strees": Light,
-            //};
+           // CartoDB layer 
+           var CartoDB_Positron = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            });
           
-           // var groups = {
-			//"Cafe" : geojsonlayer1,
-            //};
+           
+
+          // AUTO LOCATE FEATURE 
           
-       var controlLayers = L.control.layers().addTo(map);
-
-
-// To Auto-Locate Yourself And create a radius marker. 
-    //      function onLocationFound(e) {
-	//		var radius = e.accuracy / 2;
+          // To Auto-Locate Yourself And create a radius marker. 
+          function onLocationFound(e) {
+            var radius = e.accuracy / 2;
       
-//Create pop-up to display location accuracy.  Location is coming from IP location or GPS receiver in mobile device
-	//	L.marker(e.latlng, {icon: loc}).addTo(map)
-    //      .bindPopup("You are within " + radius + " meters from this point").openPopup();
+          //Create pop-up to display location accuracy.  Location is coming from IP location or GPS receiver in mobile device
+          L.marker(e.latlng, {icon: loc}).addTo(map)
+          .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-//Create circle to graphically represent location accuracy
-	//	L.circle(e.latlng, radius).addTo(map);
-	//	}
+          //Create circle to graphically represent location accuracy
+          L.circle(e.latlng, radius).addTo(map);
+          }
 
-//Code for handling any errors that come up
-	//	function onLocationError(e) {
-	//		alert(e.message);
-	//	}
+          //Code for handling any errors that come up
+          function onLocationError(e) {
+              alert(e.message);
+          }
 
-	//	map.on('locationfound', onLocationFound);
-	//	map.on('locationerror', onLocationError);
+          map.on('locationfound', onLocationFound);
+          map.on('locationerror', onLocationError);
 
-//Locate point and zoom to that location with a zoom level of 16
-	//	map.locate({setView: true, maxZoom: 16});
+          //Locate point and zoom to that location with a zoom level of 16
+          map.locate({setView: true, maxZoom: 16});
+          
+          // END AUTO LOCATE FEATURE
 
          
-        //-----------------------------------------------     
-		// CONTROL FOR POPUP ON MOUSE HOVER
-        //-----------------------------------------------     
+          //-----------------------------------------------     
+          // CONTROL FOR POPUP ON MOUSE HOVER
+          //-----------------------------------------------     
 
-        var info = L.control({
-              position: 'bottomleft'
-        });
+          var info = L.control({
+                position: 'bottomleft'
+          });
 
-		info.onAdd = function(map) {
-			this._div = L.DomUtil.create('div', 'info');
-			this.update();
-			return this._div;
-		};
+          info.onAdd = function(map) {
+              this._div = L.DomUtil.create('div', 'info');
+              this.update();
+              return this._div;
+          };
 
-		info.update = function(props) {
-			this._div.innerHTML = '<h4>Wi-Fi Locations</h4>' + (props ?
-				'<b>' + props.name : 'Hover over a Point');
-		};
+          info.update = function(props) {
+              this._div.innerHTML = '<h4>Wi-Fi Locations</h4>' + (props ?
+                  '<b>' + props.name : 'Hover over a Point');
+          };
+          info.addTo(map);
 
-		info.addTo(map);
-        
+
+          function resetHighlight(e) {
+            info.update();
+          }
+
+          function highlightFeature(e) {
+              var layer = e.target;
+            info.update(layer.feature.properties);
+          }
+
+          function onEachFeature(feature, layer) {
+              layer.on({ //addEventListeners
+                  mouseover: highlightFeature,
+                  mouseout: resetHighlight,// mouse moves over shape
+              });
+          }
           
-		function resetHighlight(e) {
-          info.update();
-			
-		}
-          
-        function highlightFeature(e) {
-			var layer = e.target;
-          info.update(layer.feature.properties);
-		}
+         // END MOUSE CONTROL 
 
-
-        function onEachFeature(feature, layer) {
-            layer.on({ //addEventListeners
-                mouseover: highlightFeature,
-                mouseout: resetHighlight,// mouse moves over shape
-			
-			});
-		}
+         //ICONS USED ON MAP 
           
          var wifi = new L.Icon({
              iconSize: [35, 43],
@@ -143,233 +141,244 @@
              popupAnchor:  [0, 0],
              iconUrl: 'https://dl.dropboxusercontent.com/s/cxnsmgx4gfupx2r/Wifi.png'
              });
-          // Created by Il Capitano from Noun Project 
+          // Created by Il Capitano from Noun Project, Wi-fi Icon
 
-
-
-         var wifi2 = new L.Icon({
-             iconSize: [35, 43],
-             iconAnchor: [13, 27],
-             popupAnchor:  [0, 0],
-             iconUrl: 'https://dl.dropboxusercontent.com/s/y9evdou9yluved6/Wifi2.png'
-             });
-         // Created by Il Capitano from Noun Project 
-        var loc = new L.Icon({
+ 
+         var loc = new L.Icon({
              iconSize: [44, 55],
              iconAnchor: [13, 27],
              popupAnchor:  [10, -20],
              iconUrl: 'https://dl.dropboxusercontent.com/s/9iy14nj1ud698t5/loc.png'
              });
-         var geojsonMarkerOptions = {
-    	      radius: 8,
-    	      fillColor: "#ff7800",
-    	      color: "#000",
-    	      weight: 1,
-    	      opacity: 1,
-    	      fillOpacity: 0.7
-		    };
+         // Created by Alex Kwa From Noun Project, Auto Locate Icon 
          
+         var mug = new L.Icon({
+             iconSize: [30, 40],
+             iconAnchor: [13, 27],
+             popupAnchor:  [10, -20],
+             iconUrl: 'https://dl.dropboxusercontent.com/s/zot01lfqh9l3eav/Cafemug.png'
+             });
+         // Created by Alex Kwa From Noun Project, Sidewalk Cafe Locations 
          
+         // END ICONS SECTION
 
-
          
-        // Created by Alex Kwa from Noun Project 
 
        
-			//MarkerClusterGroup that collects all GeoJSON objects
+          //MarkerClusterGroup that collects all GeoJSON objects
 
-          
-			var group = new L.markerClusterGroup().addTo(map);
-			var geojsonlayer1;
 
-			//-----------------------------------------------
-			// FETCHING GEOJSON DATA FROM CARTODB
-			// CALL THE CARTODB SQL API HERE IN URL FORMAT
-			//-----------------------------------------------
-			
-            // constructing the query
- 
-            var querystem = "https://ramzia.carto.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM wifi_nyc";
-            var where = " WHERE name ILIKE '%25"
-            var search = '';
-            var query = querystem + where + search + "%25'";
-           
-            var querystem2 = "https://ramzia.carto.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM wifi_nyc";
-            var query2 = querystem;
-          
-			console.log("Initial query: " + query);
+          var group = new L.markerClusterGroup().addTo(map);
+          var geojsonlayer1;
 
-            //running the query
-			$.getJSON(query, function(data) {
-					geojsonlayer = L.geoJson(data, { 
-                       pointToLayer: function (feature, latlng) {
+          //-----------------------------------------------
+          // FETCHING GEOJSON DATA FROM CARTODB
+          // CALL THE CARTODB SQL API HERE IN URL FORMAT
+          //-----------------------------------------------
+
+          // constructing the query
+
+          var querystem = "https://ramzia.carto.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM wifi_nyc";
+          var where = " WHERE name ILIKE '%25"
+          var search = '';
+          var query = querystem + where + search + "%25'";
+
+
+          console.log("Initial query: " + query);
+
+          //running the query
+          $.getJSON(query, function(data) {
+            geojsonlayer = L.geoJson(data, { 
+              pointToLayer: function (feature, latlng) {
                 return L.marker(latlng, {icon: wifi, highlight: "temporary"});
+              }, onEachFeature: onEachFeature
+            }).addTo(group);
+            map.fitBounds(group.getBounds()); // zooms to fit data
 
-
-         
-                }, onEachFeature: onEachFeature
-            
-                   
-					}).addTo(group);
-                    
-				map.fitBounds(group.getBounds()); // zooms to fit data
-
-			});
-         
+          });
          
 
-            //-----------------------------------------------     
-	    	// CONTROL FOR TEXT FIELD TO ENTER SEARCH TERM
-            //-----------------------------------------------     
-			var myControl = L.Control.extend({
-				options: {
-					position: 'bottomleft'
-				},
-				onAdd: function(map) {
-					this._div = L.DomUtil.create('div', 'myControl');
-					this._div.innerHTML = '<h1 id="title">Search term</h1>' +
-						'<input type="text" id="myTextField" value="Try Queens." />' +
-						'<input type="submit" id="searchBtn" value="Search" onclick="change()"/>'
-					L.DomEvent.disableClickPropagation(this._div);
-					return this._div;
-				}
-              
-			});
-            map.addControl(new myControl());
+
+          //-----------------------------------------------     
+          // CONTROL FOR TEXT FIELD TO ENTER SEARCH TERM
+          //-----------------------------------------------     
+          var myControl = L.Control.extend({
+            options: {
+              position: 'bottomleft'
+            },
+            onAdd: function(map) {
+              this._div = L.DomUtil.create('div', 'myControl');
+              this._div.innerHTML = '<h1 id="title">Search term</h1>' +
+                '<input type="text" id="myTextField" value="Try Queens." />' +
+                '<input type="submit" id="searchBtn" value="Search" onclick="change()"/>'
+              L.DomEvent.disableClickPropagation(this._div);
+              return this._div;
+            }
+
+          });
+          map.addControl(new myControl());
           
-            var myControl2 = L.Control.extend({
-				options: {
-					position: 'topleft'
-				},
-				onAdd: function(map) {
-					this._div = L.DomUtil.create('div2', 'myControl2');
-					this._div.innerHTML = '<h1 id="title2">Indoor/Outdoor</h1>' +
-                        '<select id="selector">' + 
-                          '<option value="init2">Any</option>' + 
-                          '<option value="layer1.1">Indoor</option>' + 
-                          '<option value = "layer2.2">Outdoor</option>' + 
-                        '</select>'
-					L.DomEvent.disableClickPropagation(this._div);	
-					return this._div;
-				}
-			});
-            map.addControl(new myControl2());
-          
-            var layer_select2 = L.DomUtil.get("selector");
-            //prevent clicks on the selector from propagating through to the map
-            //(otherwise popups will close immediately after opening)
-            L.DomEvent.addListener(layer_select2, 'click', function(e) {
-              L.DomEvent.stopPropagation(e);
-            });
-            L.DomEvent.addListener(layer_select2, 'change', change2);
+          //-----------------------------------------------     
+          // FUNCTIONS FOR HANDLING SEARCH FIELD
+          //-----------------------------------------------     
 
-            // button functionality - get value from textfield and change layer
-            function change2(e) {
-              	// updating the layer means deleting the old one and
-				// adding a new one
-				//debugger;
-                group.removeLayer(geojsonlayer);
-                
-                if (e.target.value == "init2") {
-                  query2 = querystem;
-                } else if (e.target.value == "layer1.1"){
-                  query2 = querystem + " WHERE location_t = 'Indoor'";
+          // button functionality - get value from textfield and change layer
+          function change() {
+            search = document.getElementById('myTextField').value;
+            if (search.length == 0) {
+              alert('Nothing to search for...');
+              return;
+            }
+            // updating the layer means deleting the old one and
+            // adding a new one
+            group.removeLayer(geojsonlayer);
 
-                } else if (e.target.value == "layer2.2"){
-                  query2 = querystem + " WHERE location_t = 'Outdoor'";
-                }
+            query = querystem + where + search + "%25'";
+            console.log("Changed query: " + query);
 
-				console.log("Changed query: " + query2);
-
-				$.getJSON(query2, function(data) {
-					geojsonlayer = L.geoJson(data, { 
-                       pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {icon: wifi, highlight: "temporary"} );
-                }, onEachFeature: onEachFeature
-					
-					}).addTo(group);
-				});
-                map.fitBounds(group.getBounds()); // zooms to fit data
-			}
-          
-          
-
-            //-----------------------------------------------     
-            // FUNCTIONS FOR HANDLING SEARCH FIELD
-            //-----------------------------------------------     
-
-			// button functionality - get value from textfield and change layer
-			function change() {
-              search = document.getElementById('myTextField').value;
-				if (search.length == 0) {
-					alert('Nothing to search for...');
-					return;
-				}
-				// updating the layer means deleting the old one and
-				// adding a new one
-				group.removeLayer(geojsonlayer);
-
-				query = querystem + where + search + "%25'";
-				console.log("Changed query: " + query);
-
-				$.getJSON(query, function(data) {
-					geojsonlayer = L.geoJson(data, { 
-                      onEachFeature: onEachFeature,
-						//onEachFeature: function(feature, layer) {
-							// ADD A POPUP WITH SOME INFO
-							//layer.bindPopup("<h2>" + feature.properties.name + "</p>");
-                      pointToLayer: function (feature, latlng) {
-                return L.marker(latlng, {icon: wifi, highlight: "temporary"});
-                }
-					}).addTo(group);
-                  map.fitBounds(group.getBounds());
-				});
-
-				var title = document.getElementById('title');
-				title.innerHTML = search;
-			}
-          
-          //Second Data Set Cafes in NYC 
-      
-            var group4 = new L.markerClusterGroup().addTo(map);
-          
-		    var query3 = "https://ramzia.carto.com/api/v2/sql?format=GeoJSON&q=SELECT * FROM cafes_nyc";
-
-
-            console.log("Query: "+query3);
-
-            $.getJSON(query3, function(data) {
-              var geojsonlayer = L.geoJson(data,{
-                // add popup with info to each geosjon feature
-                onEachFeature: function(feature, layer) {
-                  layer.bindPopup("<h2>" + feature.properties.business_name + "</h2>");
-			    },
-                //style the point marker
+            $.getJSON(query, function(data) {
+              geojsonlayer = L.geoJson(data, { 
+                onEachFeature: onEachFeature,
+                //onEachFeature: function(feature, layer) {
+                // ADD A POPUP WITH SOME INFO
+                //layer.bindPopup("<h2>" + feature.properties.name + "</p>");
                 pointToLayer: function (feature, latlng) {
-				  return L.circleMarker(latlng, geojsonMarkerOptions);
-			    }
-			  }).addTo(group4);controlLayers.addOverlay(geojsonlayer, 'Cafes');
-            
-              map.fitBounds(map.getBounds()); // zooms to fit data
-           });  
+                  return L.marker(latlng, {icon: wifi, highlight: "temporary"});
+                }
+              }).addTo(group);
+              map.fitBounds(group.getBounds());
+            });
+
+            var title = document.getElementById('title');
+            title.innerHTML = search;
+          }
+          
+          //-----------------------------------------------     
+          // END SEARCH FIELD
+          //-----------------------------------------------
+          
+          
+          //CONTROLS FOR DROP DOWN MENU 
+          
+          var myControl2 = L.Control.extend({
+            options: {
+              position: 'topright'
+            },
+            onAdd: function(map) {
+              this._div = L.DomUtil.create('div2', 'myControl2');
+              this._div.innerHTML = '<h1 id="title2">Indoor/Outdoor</h1>' +
+                '<select id="selector">' + 
+                '<option value="init2">Any</option>' + 
+                '<option value="layer1.1">Indoor</option>' + 
+                '<option value = "layer2.2">Outdoor</option>' + 
+                '</select>'
+              L.DomEvent.disableClickPropagation(this._div);	
+              return this._div;
+            }
+          });
+          map.addControl(new myControl2());
+          
+          var layer_select2 = L.DomUtil.get("selector");
+          //prevent clicks on the selector from propagating through to the map
+          //(otherwise popups will close immediately after opening)
+          L.DomEvent.addListener(layer_select2, 'click', function(e) {
+            L.DomEvent.stopPropagation(e);
+          });
+          L.DomEvent.addListener(layer_select2, 'change', change2);
+
+          // button functionality - get value from textfield and change layer
+          function change2(e) {
+            // updating the layer means deleting the old one and
+            // adding a new one
+            //debugger;
+            group.removeLayer(geojsonlayer);
+
+            if (e.target.value == "init2") {
+              query2 = querystem;
+            } else if (e.target.value == "layer1.1"){
+              query2 = querystem + " WHERE location_t = 'Indoor'";
+
+            } else if (e.target.value == "layer2.2"){
+              query2 = querystem + " WHERE location_t = 'Outdoor'";
+            }
+
+            console.log("Changed query: " + query2);
+
+            $.getJSON(query2, function(data) {
+              geojsonlayer = L.geoJson(data, { 
+                pointToLayer: function (feature, latlng) {
+                  return L.marker(latlng, {icon: wifi, highlight: "temporary"} );
+                }, onEachFeature: onEachFeature
+
+              }).addTo(group);
+            });
+            map.fitBounds(group.getBounds()); // zooms to fit data
+          }
+          
+         //END CONTROLS FOR DROP DOWN MENU
+          
+         //SECOND DATA SET SIDEWALK CAFES IN NYC 
+      
+          var group4 = new L.markerClusterGroup().addTo(map);
+  
+          var query3 = "https://ramzia.carto.com/api/v2/sql?format=GeoJSON&q=Select DISTINCT(s1.business_name), s1.the_geom_webmercator,s1.cartodb_id, s1.the_geom\
+                          FROM cafes_nyc_2 s1, wifi_nyc s2\
+                          WHERE ST_DWithin(s1.the_geom, s2.the_geom, 0.002)\
+                          AND s1.lic_status = 'Active'";
+       
+
+          console.log("Query: "+query3);
+
+          $.getJSON(query3, function(data) {
+            var geojsonlayer = L.geoJson(data,{
+              // add popup with info to each geosjon feature
+              onEachFeature: function(feature, layer) {
+                layer.bindPopup("<h2>" + feature.properties.business_name + "</h2>");},
+              pointToLayer: function (feature, latlng) {
+                return L.marker(latlng,{icon: mug});
+              }
+            }).addTo(group4);
+            map.fitBounds(group4.getBounds()); // zooms to fit data
+          });  
 
           console.log("Done!");
+           
+           //Layers of basemaps
+            var baseMaps = {
+                "Light": Light,
+                "CartoLight": CartoDB_Positron
+            };
+            //Layers of Data
+            var overlayMaps = {
+                "Sidewalk Cafes": group4,
+                "Wifi Locations": group
 
-          	// Functions to either disable (onmouseover) or enable (onmouseout) the map's dragging
-/*
-            function controlEnter(e) {
-				map.dragging.disable();
-			}
+            };
+            //Control for layers 
+            var controlLayers = L.control.layers(baseMaps,overlayMaps).addTo(map);
 
-			function controlLeave(e) {
-				map.dragging.enable();
-			}
-			var inputTags = document.getElementsByTagName("input")
-			for (var i = 0; i < inputTags.length; i++) {
-				inputTags[i].onmouseover = controlEnter;
-				inputTags[i].onmouseout = controlLeave;
-			}
-*/
+
+        
+
+      //   var legend = L.control({position: 'bottomright'});
+
+      //   legend.onAdd = function (map) {
+      // 
+      //        var div = L.DomUtil.create('div', 'info legend'),
+      //        grades = ["<h7>Wifi</h7>", "<h7>Cafe</h7>"],
+      //       labels = ['https://dl.dropboxusercontent.com/s/cxnsmgx4gfupx2r/Wifi.png','https://dl.dropboxusercontent.com/s/zot01lfqh9l3eav/Cafemug.png'];
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      //     for (var i = 0; i < grades.length; i++) {
+      //       div.innerHTML +=
+      //          grades[i] + (" <img src="+ labels[i] +" height='30' width='47'>") +'<br>';
+      //     }
+
+      //      return div;
+      //     };
+      ///    legend.addTo(map);
+          
+
 		</script>
 	</body>
 
