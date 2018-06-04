@@ -74,23 +74,23 @@
             //var radius = e.accuracy / 2;
       
           //Create pop-up to display location accuracy.  Location is coming from IP location or GPS receiver in mobile device
-          L.marker(e.latlng, {icon: loc}).addTo(map)
-          .bindPopup("You are within " + radius + " meters from this point").openPopup();
+          //L.marker(e.latlng, {icon: loc}).addTo(map)
+          //.bindPopup("You are within " + radius + " meters from this point").openPopup();
 
           //Create circle to graphically represent location accuracy
-          L.circle(e.latlng, radius).addTo(map);
-          }
+          //L.circle(e.latlng, radius).addTo(map);
+         // }
 
           //Code for handling any errors that come up
-          function onLocationError(e) {
-              alert(e.message);
-          }
+         // function onLocationError(e) {
+        //      alert(e.message);
+        //  }
 
-          map.on('locationfound', onLocationFound);
-          map.on('locationerror', onLocationError);
+         // map.on('locationfound', onLocationFound);
+         // map.on('locationerror', onLocationError);
 
           //Locate point and zoom to that location with a zoom level of 16
-          map.locate({setView: true, maxZoom: 16});
+         // map.locate({setView: true, maxZoom: 16});
           
           // END AUTO LOCATE FEATURE
 
