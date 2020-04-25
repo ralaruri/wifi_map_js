@@ -48,5 +48,5 @@ here is the demo of the map: https://ralaruri.github.io/wifi-map/
 #### Interface 1:
 ![Features 1](Features1.png)
 #### Interface 2: 
-![Features 2](Features1.png)
+![Features 2](Features2.png)
 
