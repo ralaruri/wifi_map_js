@@ -16,6 +16,7 @@ here is the demo of the map: https://ralaruri.github.io/wifi-map/
 * SQL is nothing new but how it is used in this application is pretty creative:
 * Using Cartos API to call the geojson of the queried dataset in order to visualize it in leaflet within the search box!
 
+
 ### Tooling:
 * Jsbin: https://jsbin.com/?html,output
   * live programming using javascript, able to emulate a web browser extremely quick prototyping. 
@@ -41,6 +42,11 @@ here is the demo of the map: https://ralaruri.github.io/wifi-map/
   * If not located in NYC it would pin you at your current location. 
   * Need to add some sort of anonymization buffer also.
 
-## Screen Shots:
-## Overview:
+### Screen Shots:
+#### Overview:
+![Overview](overview.png)
+#### Interface 1:
+![Features 1](Features1.png)
+#### Interface 2: 
+![Features 2](Features1.png)
 
