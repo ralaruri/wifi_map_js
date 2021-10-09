@@ -2,7 +2,7 @@
 
 * The goal of this application is to allow people to find free Wi-Fi locations with an added layer of convenience with  sidewalk café locations in proximity to them. This was a bootstrapped project to quickly deploy and develop within a 24 hour time frame using free and quickly avaiable tools and code. 
 
-here is the demo of the map: https://ralaruri.github.io/wifi-map/
+here is the demo of the map: https://ralaruri.github.io/wifi_map_js/
 
 
 ### Stack this map is built on:
